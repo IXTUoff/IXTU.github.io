@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Иксту | Девлог RMW</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; }
+
+      body {
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background-color: #2e7d32;
+        background-image: url('/bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><circle cx='14' cy='14' r='11' fill='%234CAF50' stroke='%23ffffff' stroke-width='2' opacity='0.92'/><circle cx='10' cy='9' r='4' fill='%23ffffff' opacity='0.65'/></svg>") 14 14, auto;
+      }
+      a, button, #time-greeting, .social-btn, .info-link {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='12' fill='%2333ff99' stroke='%23ffffff' stroke-width='2' opacity='0.95'/><circle cx='10' cy='10' r='4.5' fill='%23ffffff' opacity='0.7'/><circle cx='15' cy='15' r='4' fill='none' stroke='%23ffffff' stroke-width='1.2' opacity='0.6'/></svg>") 15 15, pointer;
+      }
+      @media (hover: hover) {
+        body { background-attachment: fixed; }
+      }
+
+      .vista-window {
+        max-width: 750px;
+        margin: 40px auto;
+        background-color: rgba(20, 30, 20, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        color: #ffffff;
+        overflow: hidden;
+      }
+
+      .window-header {
+        background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.4));
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .window-body {
+        padding: 45px 25px;
+        text-align: center;
+      }
+
+      #time-greeting {
+        margin-top: 0;
+        font-size: 2.2em;
+        cursor: pointer;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      #time-greeting:hover {
+        text-shadow: 0 0 10px rgba(174, 255, 174, 0.6);
+      }
+
+      .social-links {
+        margin-top: 25px;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .social-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 12px 24px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transition: all 0.2s ease;
+      }
+
+      .btn-tg { background: linear-gradient(to bottom, #2ea6da, #107ba8); }
+      .btn-yt { background: linear-gradient(to bottom, #ff3333, #b30000); }
+
+      .social-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(255, 255, 255, 0.4);
+      }
+
+      .progress-container {
+        max-width: 500px;
+        margin: 30px auto 10px auto;
+        text-align: left;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .progress-title {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #aeffae;
+      }
+      .progress-label {
+        font-size: 14px;
+        margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .progress-bar-bg {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        height: 16px;
+        overflow: hidden;
+        margin-bottom: 12px;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        min-width: 4px;
+        background: linear-gradient(to bottom, #b3ffb3 0%, #4CAF50 50%, #2e7d32 100%);
+      }
+
+      .info-link {
+        display: inline-block;
+        margin-top: 25px;
+        color: #aeffae;
+        font-weight: bold;
+        text-decoration: none;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 10px 20px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: all 0.2s ease;
+      }
+      .info-link:hover {
+        background: rgba(255, 255, 255, 0.18);
+        box-shadow: 0 0 10px rgba(174, 255, 174, 0.4);
+      }
+
+      .counter-panel {
+        margin-top: 30px;
+        font-size: 13px;
+        color: #aeffae;
+        font-weight: bold;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 0, 0, 0.4);
+        padding: 6px 18px;
+        border-radius: 20px;
+        border: 1px solid rgba(174, 255, 174, 0.3);
+      }
+
+      .counter-number {
+        background: #000000;
+        color: #33ff33;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: 'Courier New', Courier, monospace;
+      }
+
+      .easter-egg-modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(320px, calc(100% - 30px));
+        background-color: #f0f0ed;
+        border: 1px solid #0054e3;
+        border-radius: 4px;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+        color: #000000;
+        font-family: 'Tahoma', sans-serif;
+        font-size: 12px;
+        z-index: 1000;
+      }
+      .modal-header {
+        background: linear-gradient(to right, #0058e6, #3a97fc);
+        color: white;
+        padding: 4px 8px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .modal-close {
+        background: #e81123;
+        color: white;
+        border: none;
+        cursor: pointer;
+        padding: 2px 8px;
+      }
+      .modal-ok {
+        padding: 4px 20px;
+        background: #f0f0ed;
+        border: 1px solid #707070;
+        cursor: pointer;
+      }
+
+      @media (max-width: 500px) {
+        body { padding: 10px; }
+        .vista-window { margin: 15px auto; }
+        .window-body { padding: 30px 15px; }
+        #time-greeting { font-size: 1.7em; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Окно ошибки-пасхалки -->
+    <div id="errorBox" class="easter-egg-modal" role="dialog" aria-labelledby="errorTitle">
+      <div class="modal-header">
+        <span id="errorTitle">System Error 0x0000007B</span>
+        <button class="modal-close" onclick="closeSecret()" aria-label="Закрыть">X</button>
+      </div>
+      <div style="padding: 15px; display: flex; gap: 12px; align-items: center;">
+        <div style="background: #e81123; color: white; border-radius: 50%; width: 32px; height: 32px; min-width: 32px; font-size: 18px; display: flex; align-items: center; justify-content: center;">❌</div>
+        <div>
+          <b>Критический сбой системы!</b><br>
+          Обнаружен слишком крутой геймдев-разработчик! 😎
+        </div>
+      </div>
+      <div style="padding: 10px; text-align: center; border-top: 1px solid #d0d0d0;">
+        <button class="modal-ok" onclick="closeSecret()">ОК</button>
+      </div>
+    </div>
+
+    <div class="vista-window">
+      <div class="window-header">
+        <h2 style="margin: 0; font-weight: 400; color: #aeffae; text-align: left;">🪐 Проекты от Иксту</h2>
+      </div>
+
+      <div class="window-body">
+        <h1 id="time-greeting" onclick="openSecret()">Добро пожаловать!</h1>
+
+        <p style="font-size: 1.2em; max-width: 600px; margin: 20px auto;">
+          Привет! Я <b>Ваня (Иксту)</b>. Это моё небольшое место в интернете, где можно узнать обо мне, моих проектах и посмотреть, чем я занимаюсь.
+        </p>
+
+        <div class="progress-container">
+          <div class="progress-title">🛠️ Статус разработки RMW:</div>
+          <div class="progress-label"><span>📝 Сюжет и квесты:</span> <span>38%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 38%;"></div></div>
+          <div class="progress-label"><span>💻 Программирование GML:</span> <span>1%</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 1%;"></div></div>
+        </div>
+
+        <h3>Мои социальные сети:</h3>
+        <div class="social-links">
+          <a href="https://t.me/IXliveTU" target="_blank" rel="noopener noreferrer" class="social-btn btn-tg">📱 Telegram</a>
+          <a href="https://youtube.com/@IXTU_TIT" target="_blank" rel="noopener noreferrer" class="social-btn btn-yt">🎥 YouTube</a>
+        </div>
+
+        <a href="/info.html" class="info-link">ℹ️ Узнать больше обо мне →</a><br>
+
+        <div class="counter-panel">
+          <span>📟 Твои заходы:</span>
+          <span class="counter-number" id="visit-count">0001</span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      try {
+        let visits = parseInt(localStorage.getItem('page_view_count'), 10);
+        visits = isNaN(visits) ? 1 : visits + 1;
+        localStorage.setItem('page_view_count', visits);
+        document.getElementById('visit-count').textContent = String(visits).padStart(4, '0');
+      } catch (e) {}
+
+      const hour = new Date().getHours();
+      const greetingElement = document.getElementById('time-greeting');
+      if (hour >= 5 && hour < 12) { greetingElement.textContent = "🌅 Доброе утро!"; }
+      else if (hour >= 12 && hour < 18) { greetingElement.textContent = "🌿 Добрый день!"; }
+      else if (hour >= 18 && hour < 23) { greetingElement.textContent = "🌆 Добрый вечер!"; }
+      else { greetingElement.textContent = "🌌 Доброй ночи! За кодом? 💀"; }
+
+      function openSecret() { document.getElementById('errorBox').style.display = 'block'; }
+      function closeSecret() { document.getElementById('errorBox').style.display = 'none'; }
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeSecret();
+      });
+    </script>
+  </body>
+</html>

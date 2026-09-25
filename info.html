@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Обо мне | Иксту</title>
+    <style>
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        padding: 20px;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background-color: #2e7d32;
+        background-image: url('/bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><circle cx='14' cy='14' r='11' fill='%234CAF50' stroke='%23ffffff' stroke-width='2' opacity='0.92'/><circle cx='10' cy='9' r='4' fill='%23ffffff' opacity='0.65'/></svg>") 14 14, auto;
+      }
+      a, button {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='12' fill='%2333ff99' stroke='%23ffffff' stroke-width='2' opacity='0.95'/><circle cx='10' cy='10' r='4.5' fill='%23ffffff' opacity='0.7'/><circle cx='15' cy='15' r='4' fill='none' stroke='%23ffffff' stroke-width='1.2' opacity='0.6'/></svg>") 15 15, pointer;
+      }
+      @media (hover: hover) {
+        body { background-attachment: fixed; }
+      }
+
+      .vista-window {
+        max-width: 750px;
+        margin: 40px auto;
+        background-color: rgba(20, 30, 20, 0.8);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-radius: 15px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        color: #ffffff;
+        overflow: hidden;
+      }
+
+      .window-header {
+        background: linear-gradient(to bottom, rgba(255,255,255,0.15), rgba(0,0,0,0.4));
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .window-body { padding: 25px; }
+
+      .back-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 6px;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.2), rgba(0,0,0,0.2));
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transition: all 0.2s;
+      }
+      .back-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+
+      fieldset {
+        min-width: 0;
+        border: 1px solid rgba(174, 255, 174, 0.4);
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin: 0 0 20px 0;
+        background: rgba(255, 255, 255, 0.03);
+      }
+      legend { color: #aeffae; font-weight: bold; padding: 0 10px; }
+
+      ul { margin: 5px 0; padding-left: 20px; }
+      li { margin-bottom: 5px; }
+
+      .devlog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+        margin-top: 15px;
+      }
+      .devlog-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+      }
+      .devlog-card img {
+        display: block;
+        width: 100%;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 6px;
+        background: rgba(0,0,0,0.3);
+        margin-bottom: 8px;
+      }
+      .devlog-card span { font-size: 0.9em; color: #d0ffd0; }
+
+      @media (max-width: 500px) {
+        body { padding: 10px; }
+        .vista-window { margin: 15px auto; }
+        .window-body { padding: 15px; }
+        fieldset { padding: 12px 14px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="vista-window">
+      <div class="window-header">
+        <h2 style="margin: 0; font-weight: 400; color: #aeffae;">🪐 Проекты от Иксту / Инфо</h2>
+        <a href="/" class="back-btn">⬅ На главную</a>
+      </div>
+
+      <div class="window-body">
+        <h1 style="margin-top: 0;">👋 Привет! Я Иксту</h1>
+        <p>Привет! Я Иксту — человек, который любит игры, компьютеры и всякие творческие штуки.</p>
+        <!-- Не забудь обновлять возраст -->
+        <p>Мне 13 лет. Я интересуюсь разработкой игр, 3D, анимацией и программированием. Сейчас учусь работать с <b>GameMaker</b> и <b>Blender</b>, иногда что-нибудь создаю, экспериментирую и пытаюсь понять, почему оно опять сломалось 💀</p>
+
+        <fieldset>
+          <legend>🖼️ Материалы разработки RMW</legend>
+          <div class="devlog-grid">
+            <div class="devlog-card">
+              <img src="/gametest.gif" alt="Геймплей RMW" onerror="this.src='/bg.jpg'">
+              <span>Первые румы и логика перемещения</span>
+            </div>
+            <div class="devlog-card">
+              <img src="/bg.jpg" alt="Скриншот 2">
+              <span>Проработка сюжета и Кристаллов Силы</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>🎮 Во что я играю?</legend>
+          <p>В последнее время в Roblox я играю довольно редко. Сейчас мне больше нравятся:</p>
+          <ul>
+            <li>☢️ <b>S.T.A.L.K.E.R.</b></li>
+            <li>🔧 <b>Garry's Mod</b></li>
+            <li>🌀 <b>Portal 2</b></li>
+            <li>🎮 и иногда другие игры, если они меня заинтересуют</li>
+          </ul>
+        </fieldset>
+
+        <fieldset>
+          <legend>🛠️ Что я создаю?</legend>
+          <p>Сейчас я разрабатываю свою игру — <b>Rupture of Magical Worlds (RMW)</b>.</p>
+          <p>Это пиксельная RPG про магию, Кристаллы Силы, разные миры и последствия решений игрока. В игре планируется несколько концовок, real-time боевая система и своя история.</p>
+        </fieldset>
+
+        <fieldset>
+          <legend>📺 Что ещё я делаю?</legend>
+          <p>Я хочу постепенно развивать свои видео и показывать то, чем занимаюсь: разработку игр, Blender, GameMaker, игры, эксперименты и просто моменты из жизни.</p>
+          <p style="font-weight: bold; color: #aeffae; text-align: center; margin-top: 15px; font-size: 1.1em;">Спасибо, что заглянул! 🌿</p>
+        </fieldset>
+
+      </div>
+    </div>
+  </body>
+</html>
