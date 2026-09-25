@@ -12,15 +12,15 @@
         padding: 20px;
         font-family: 'Segoe UI', Tahoma, sans-serif;
         background-color: #2e7d32;
-        background-image: url('/bg.jpg');
+        background-image: url('bg.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         min-height: 100vh;
-        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='28' height='28'><circle cx='14' cy='14' r='11' fill='%234CAF50' stroke='%23ffffff' stroke-width='2' opacity='0.92'/><circle cx='10' cy='9' r='4' fill='%23ffffff' opacity='0.65'/></svg>") 14 14, auto;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='28' height='28'><circle cx='14' cy='14' r='11' fill='%234CAF50' stroke='%23ffffff' stroke-width='2' opacity='0.92'/><circle cx='10' cy='9' r='4' fill='%23ffffff' opacity='0.65'/></svg>") 14 14, auto;
       }
       a, button, #time-greeting, .social-btn, .info-link {
-        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='30' height='30'><circle cx='15' cy='15' r='12' fill='%2333ff99' stroke='%23ffffff' stroke-width='2' opacity='0.95'/><circle cx='10' cy='10' r='4.5' fill='%23ffffff' opacity='0.7'/><circle cx='15' cy='15' r='4' fill='none' stroke='%23ffffff' stroke-width='1.2' opacity='0.6'/></svg>") 15 15, pointer;
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://w3.org' width='30' height='30'><circle cx='15' cy='15' r='12' fill='%2333ff99' stroke='%23ffffff' stroke-width='2' opacity='0.95'/><circle cx='10' cy='10' r='4.5' fill='%23ffffff' opacity='0.7'/><circle cx='15' cy='15' r='4' fill='none' stroke='%23ffffff' stroke-width='1.2' opacity='0.6'/></svg>") 15 15, pointer;
       }
       @media (hover: hover) {
         body { background-attachment: fixed; }
@@ -244,49 +244,35 @@
           Привет! Я <b>Ваня (Иксту)</b>. Это моё небольшое место в интернете, где можно узнать обо мне, моих проектах и посмотреть, чем я занимаюсь.
         </p>
 
+        <!-- Прогресс-бар -->
         <div class="progress-container">
           <div class="progress-title">🛠️ Статус разработки RMW:</div>
           <div class="progress-label"><span>📝 Сюжет и квесты:</span> <span>38%</span></div>
-          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 38%;"></div></div>
-          <div class="progress-label"><span>💻 Программирование GML:</span> <span>1%</span></div>
-          <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 1%;"></div></div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" style="width: 38%;"></div>
+          </div>
         </div>
 
-        <h3>Мои социальные сети:</h3>
+        <!-- Кнопка перехода на страницу инфы -->
+        <a href="info.html" class="info-link">🪐 Узнать больше обо мне (Инфо)</a>
+
+        <br>
+        <!-- Соцсети -->
         <div class="social-links">
-          <a href="https://t.me/IXliveTU" target="_blank" rel="noopener noreferrer" class="social-btn btn-tg">📱 Telegram</a>
-          <a href="https://youtube.com/@IXTU_TIT" target="_blank" rel="noopener noreferrer" class="social-btn btn-yt">🎥 YouTube</a>
+          <a href="#" class="social-btn btn-tg">Telegram</a>
+          <a href="#" class="social-btn btn-yt">YouTube</a>
         </div>
 
-        <a href="/info.html" class="info-link">ℹ️ Узнать больше обо мне →</a><br>
-
-        <div class="counter-panel">
-          <span>📟 Твои заходы:</span>
-          <span class="counter-number" id="visit-count">0001</span>
-        </div>
       </div>
     </div>
 
     <script>
-      try {
-        let visits = parseInt(localStorage.getItem('page_view_count'), 10);
-        visits = isNaN(visits) ? 1 : visits + 1;
-        localStorage.setItem('page_view_count', visits);
-        document.getElementById('visit-count').textContent = String(visits).padStart(4, '0');
-      } catch (e) {}
-
-      const hour = new Date().getHours();
-      const greetingElement = document.getElementById('time-greeting');
-      if (hour >= 5 && hour < 12) { greetingElement.textContent = "🌅 Доброе утро!"; }
-      else if (hour >= 12 && hour < 18) { greetingElement.textContent = "🌿 Добрый день!"; }
-      else if (hour >= 18 && hour < 23) { greetingElement.textContent = "🌆 Добрый вечер!"; }
-      else { greetingElement.textContent = "🌌 Доброй ночи! За кодом? 💀"; }
-
-      function openSecret() { document.getElementById('errorBox').style.display = 'block'; }
-      function closeSecret() { document.getElementById('errorBox').style.display = 'none'; }
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeSecret();
-      });
+      function openSecret() {
+        document.getElementById('errorBox').style.display = 'block';
+      }
+      function closeSecret() {
+        document.getElementById('errorBox').style.display = 'none';
+      }
     </script>
   </body>
 </html>
