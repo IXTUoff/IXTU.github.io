@@ -257,6 +257,13 @@
         <a href="info.html" class="info-link">🪐 Узнать больше обо мне (Инфо)</a>
 
         <br>
+<!-- Визуальный плеер в стиле вашего сайта -->
+<div style="margin-top: 20px;">
+  <p style="color: #aeffae; font-size: 14px; margin-bottom: 5px;">🎵 Фоновый трек:</p>
+  <audio src="music.mp3" controls loop style="outline: none; filter: sepia(20%) saturate(150%) hue-rotate(60deg); border-radius: 4px; max-width: 100%;"></audio>
+</div>
+
+        
         <!-- Соцсети -->
         <div class="social-links">
           <a href="#" class="social-btn btn-tg">Telegram</a>
@@ -275,4 +282,20 @@
       }
     </script>
   </body>
+  <!-- Аудиофайл (скрытый) -->
+<audio id="bg-audio" src="music.mp3" loop></audio>
+
+<script>
+  // Запуск музыки при первом клике по сайту (обход ограничений браузера)
+  document.addEventListener('click', function() {
+    var audio = document.getElementById('bg-audio');
+    // Проверяем, что музыка еще не играет
+    if (audio.paused) {
+      audio.volume = 0.3; // Громкость от 0.0 до 1.0 (0.3 — это 30%)
+      audio.play().catch(function(error) {
+        console.log("Автовоспроизведение заблокировано браузером:", error);
+      });
+    }
+  }, { once: true }); // { once: true } значит, что код сработает только один раз
+</script>
 </html>
